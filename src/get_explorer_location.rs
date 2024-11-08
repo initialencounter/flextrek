@@ -19,7 +19,7 @@ pub fn get_focused_explorer_path() -> Result<PathBuf> {
         // 检查 COM 初始化的结果
         let hr = CoInitializeEx(None, COINIT_APARTMENTTHREADED);
         if hr.is_err() {
-            return Err(Error::new(windows::core::HRESULT(0), "COM 初始化失败"));
+            return Err(Error::new(windows::core::HRESULT(0), "Failed to initialize COM"));
         }
 
         let hwnd_gfw: HWND = GetForegroundWindow();
@@ -32,7 +32,7 @@ pub fn get_focused_explorer_path() -> Result<PathBuf> {
                     CoUninitialize();
                     return Err(Error::new(
                         windows::core::HRESULT(0),
-                        "创建 ShellWindows 实例失败",
+                        "Failed to create ShellWindows instance",
                     ));
                 }
             };
@@ -44,7 +44,7 @@ pub fn get_focused_explorer_path() -> Result<PathBuf> {
             Ok(c) => c,
             Err(_) => {
                 CoUninitialize();
-                return Err(Error::new(windows::core::HRESULT(0), "获取窗口数量失败"));
+                return Err(Error::new(windows::core::HRESULT(0), "Failed to get window count"));
             }
         };
 
@@ -54,7 +54,7 @@ pub fn get_focused_explorer_path() -> Result<PathBuf> {
                 CoUninitialize();
                 return Err(Error::new(
                     windows::core::HRESULT(0),
-                    "未找到资源管理器窗口",
+                    "Failed to find explorer window",
                 ));
             }
         };
@@ -97,7 +97,7 @@ pub fn get_focused_explorer_path() -> Result<PathBuf> {
         CoUninitialize();
         Err(Error::new(
             windows::core::HRESULT(0),
-            "未找到资源管理器窗口或未聚焦",
+            "Failed to find explorer window or not focused",
         ))
     }
 }

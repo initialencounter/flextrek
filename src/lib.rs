@@ -30,7 +30,7 @@ where
             }
         }
     } else {
-        println!("无效的快捷键字符串: {}", hotkey_str);
+        println!("Invalid hotkey: {}", hotkey_str);
     }
 }
 
