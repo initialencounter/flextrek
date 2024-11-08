@@ -18,8 +18,8 @@ keywords = [
   "flextrek",
   "explorer",
   "hotkey",
-  "explorer selected files",
-  "explorer location"
+  "explorer-select-file",
+  "explorer-location"
 ]
 license = "AGPL-3.0"
 repository = "https://github.com/initialencounter/flextrek"
