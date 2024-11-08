@@ -1,0 +1,55 @@
+[package]
+name = "flextrek"
+version = "0.1.0"
+edition = "2021"
+
+target_os = "windows"
+
+authors = ["inintencunter <2911583893@qq.com>"]
+include = [
+  "readme.md",
+  "src",
+  "Cargo.toml",
+]
+description = "A super-easy, windows-only crate to get focused explorer location or selected files path using hotkey!"
+homepage = "https://github.com/initialencounter/flextrek"
+readme = "readme.md"
+keywords = [
+  "flextrek",
+  "explorer",
+  "hotkey",
+  "windows",
+  "explorer selected files",
+  "explorer location"
+]
+license = "AGPL-3.0"
+repository = "https://github.com/initialencounter/flextrek"
+
+[[example]]
+name = "select"
+path = "example/get_explorer_selected_file.rs"
+
+[[example]]
+name = "cwd"
+path = "example/get_explorer_location.rs"
+
+[dependencies]
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Shell",
+    "Win32_System_Com",
+    "Win32_System_Ole",
+    "Win32_UI_Shell_Common",
+    "Win32_UI_Input",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_System_SystemServices"] }
+urlencoding = "2.1.3"
+scopeguard = "1.2.0"
+futures = "0.3.31"
+
+[dev-dependencies]
+tokio = { version = "1.0", features = ["rt", "macros"] }
+
+[package.metadata.docs.rs]
+targets = ["x86_64-pc-windows-msvc", "i686-pc-windows-msvc"]
