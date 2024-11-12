@@ -3,8 +3,6 @@ name = "flextrek"
 version = "0.1.1"
 edition = "2021"
 
-target_os = "windows"
-
 authors = ["inintencunter <2911583893@qq.com>"]
 include = [
   "readme.md",
