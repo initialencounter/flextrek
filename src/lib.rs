@@ -14,12 +14,13 @@ pub mod get_explorer_selected_file;
 pub mod get_explorer_location;
 pub mod hotkey;
 
-async fn listen_hotkey<F, Fut>(hotkey_str: &'static str, mut callback: F)
+async fn listen_hotkey<F, Fut>(hotkey_str: String, mut callback: F)
 where
     F: FnMut() -> Fut,
     Fut: Future<Output = bool>,
 {
-    if let Some((modifier, key)) = parse_hotkey(hotkey_str) {
+    let hotkey_str_clone = hotkey_str.clone();
+    if let Some((modifier, key)) = parse_hotkey(hotkey_str_clone) {
         unsafe {
             let _ = RegisterHotKey(None, 1, HOT_KEY_MODIFIERS(modifier), key);
             let mut msg = MSG::default();
@@ -35,7 +36,7 @@ where
 }
 
 pub async fn listen_path<F, Fut>(
-    hotkey_str: &'static str,
+    hotkey_str: String,
     callback: F,
 ) where
     F: Fn(PathBuf) -> Fut,
@@ -50,7 +51,7 @@ pub async fn listen_path<F, Fut>(
 }
 
 pub async fn listen_selected_files<F, Fut>(
-    hotkey_str: &'static str,
+    hotkey_str: String,
     callback: F,
 ) where
     F: Fn(Vec<String>) -> Fut,

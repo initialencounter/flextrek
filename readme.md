@@ -17,7 +17,7 @@ async fn main() {
     let hotkey_str = "Ctrl+Shift+z";
     println!("Start to listen explorer selected files");
     println!("Hotkey: {}", hotkey_str);
-    listen_selected_files(hotkey_str, |files| async move {
+    listen_selected_files(hotkey_str.to_string(), |files| async move {
         println!("Selected files: {:?}", files);
     })
     .await;
@@ -35,9 +35,13 @@ async fn main() {
     let hotkey_str = "Ctrl+Shift+z";
     println!("Start to listen explorer location");
     println!("Hotkey: {}", hotkey_str);
-    let _ = listen_path(hotkey_str, |path| async move {
+    let _ = listen_path(hotkey_str.to_string(), |path| async move {
         println!("Current path: {:?}", path);
     })
     .await;
 }
 ```
+
+## CHANGELOG
+
+- v0.1.1: replace hotkey_str type from &str to String

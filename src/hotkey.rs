@@ -1,4 +1,4 @@
-pub fn parse_hotkey(hotkey_str: &str) -> Option<(u32, u32)> {
+pub fn parse_hotkey(hotkey_str: String) -> Option<(u32, u32)> {
     let parts: Vec<&str> = hotkey_str.split('+').collect();
     if parts.len() < 2 {
         return None;
@@ -113,7 +113,7 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let hotkey_str = "Ctrl+Shift+Z";
+        let hotkey_str = "Ctrl+Shift+Z".to_string();
         let (modifier, key) = hotkey::parse_hotkey(hotkey_str).unwrap();
         assert_eq!(modifier, 0x0006);
         assert_eq!(key, 0x5A);
@@ -121,7 +121,7 @@ mod tests {
 
     #[test]
     fn it_works_2() {
-        let hotkey_str = "Ctrl+Alt+s";
+        let hotkey_str = "Ctrl+Alt+s".to_string();
         let (modifier, key) = hotkey::parse_hotkey(hotkey_str).unwrap();
         assert_eq!(modifier, 0x0003);
         assert_eq!(key, 0x53);
