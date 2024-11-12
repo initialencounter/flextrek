@@ -12,8 +12,7 @@ A super-easy, windows-only crate to get focused explorer location or selected fi
 
 ```Rust
 use flextrek::listen_selected_files;
-#[tokio::main]
-async fn main() {
+fn main() {
     let hotkey_str = "Ctrl+Shift+z";
     println!("Start to listen explorer selected files");
     println!("Hotkey: {}", hotkey_str);
@@ -36,12 +35,11 @@ async fn main() {
 
 ```Rust
 use flextrek::listen_path;
-#[tokio::main]
-async fn main() {
+fn main() {
     let hotkey_str = "Ctrl+Shift+z";
     println!("Start to listen explorer location");
     println!("Hotkey: {}", hotkey_str);
-    let handle = listen_path(hotkey_str.to_string(), |path| async move {
+    let handle = listen_path(hotkey_str.to_string(), |path| move {
         println!("Current path: {:?}", path);
     });
     println!("10 seconds later, unregister");
@@ -56,5 +54,6 @@ async fn main() {
 
 ## CHANGELOG
 
+- v0.2.1: remove async from listen_path and listen_selected_files
 - v0.2.0: add unregister method
 - v0.1.1: replace hotkey_str type from &str to String

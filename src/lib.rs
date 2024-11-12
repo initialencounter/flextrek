@@ -50,7 +50,7 @@ where
     }
 }
 
-pub async fn listen_path<F, Fut>(hotkey_str: String, callback: F) -> HotkeyHandle
+pub fn listen_path<F, Fut>(hotkey_str: String, callback: F) -> HotkeyHandle
 where
     F: Fn(PathBuf) -> Fut + Send + Clone + 'static,
     Fut: Future<Output = ()> + Send,
@@ -85,7 +85,7 @@ where
     handle
 }
 
-pub async fn listen_selected_files<F, Fut>(hotkey_str: String, callback: F) -> HotkeyHandle
+pub fn listen_selected_files<F, Fut>(hotkey_str: String, callback: F) -> HotkeyHandle
 where
     F: Fn(Vec<String>) -> Fut + Send + Clone + 'static,
     Fut: Future<Output = ()> + Send,
