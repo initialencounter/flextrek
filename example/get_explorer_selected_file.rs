@@ -6,8 +6,7 @@ async fn main() {
     println!("快捷键: {}", hotkey_str);
     let handle = listen_selected_files(hotkey_str.to_string(), |files| async move {
         println!("选中的文件: {:?}", files);
-    })
-    .await;
+    });
     println!("10 秒后取消监听");
     std::thread::sleep(std::time::Duration::from_secs(10));
     println!("取消监听");

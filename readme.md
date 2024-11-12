@@ -56,5 +56,6 @@ async fn main() {
 
 ## CHANGELOG
 
+- v0.2.1: remove async from listen_path and listen_selected_files
 - v0.2.0: add unregister method
 - v0.1.1: replace hotkey_str type from &str to String
