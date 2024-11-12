@@ -16,6 +16,7 @@
     "NUMPADENTER",
     "NUMPADMULTIPLY",
     "NUMPADSUBTRACT",
+    "oneshot",
     "phwnd",
     "println",
     "scopeguard",

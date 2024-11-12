@@ -12,15 +12,21 @@ A super-easy, windows-only crate to get focused explorer location or selected fi
 
 ```Rust
 use flextrek::listen_selected_files;
-#[tokio::main(flavor = "current_thread")]
+#[tokio::main]
 async fn main() {
     let hotkey_str = "Ctrl+Shift+z";
     println!("Start to listen explorer selected files");
     println!("Hotkey: {}", hotkey_str);
-    listen_selected_files(hotkey_str.to_string(), |files| async move {
+    let handle = listen_selected_files(hotkey_str.to_string(), |files| async move {
         println!("Selected files: {:?}", files);
-    })
-    .await;
+    });
+    println!("10 seconds later, unregister");
+    std::thread::sleep(std::time::Duration::from_secs(10));
+    println!("Unregister");
+    handle.unregister();
+    loop {
+        std::thread::sleep(std::time::Duration::from_secs(1));
+    }
 }
 ```
 
@@ -30,18 +36,25 @@ async fn main() {
 
 ```Rust
 use flextrek::listen_path;
-#[tokio::main(flavor = "current_thread")]
+#[tokio::main]
 async fn main() {
     let hotkey_str = "Ctrl+Shift+z";
     println!("Start to listen explorer location");
     println!("Hotkey: {}", hotkey_str);
-    let _ = listen_path(hotkey_str.to_string(), |path| async move {
+    let handle = listen_path(hotkey_str.to_string(), |path| async move {
         println!("Current path: {:?}", path);
-    })
-    .await;
+    });
+    println!("10 seconds later, unregister");
+    std::thread::sleep(std::time::Duration::from_secs(10));
+    println!("Unregister");
+    handle.unregister();
+    loop {
+        std::thread::sleep(std::time::Duration::from_secs(1));
+    }
 }
 ```
 
 ## CHANGELOG
 
+- v0.2.0: add unregister method
 - v0.1.1: replace hotkey_str type from &str to String
