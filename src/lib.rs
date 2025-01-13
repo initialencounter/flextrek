@@ -118,3 +118,37 @@ where
 
     handle
 }
+
+
+pub fn listen<F, Fut>(hotkey_str: String, callback: F) -> HotkeyHandle
+where
+    F: Fn() -> Fut + Send + Clone + 'static,
+    Fut: Future<Output = ()> + Send,
+{
+    let (tx, rx) = oneshot::channel();
+    let rx = Arc::new(Mutex::new(rx));
+
+    let handle = HotkeyHandle { cancel_sender: tx };
+
+    std::thread::spawn(move || {
+        let rt = tokio::runtime::Runtime::new().unwrap();
+        rt.block_on(async {
+            let callback = callback.clone();
+            let rx = rx.clone();
+            listen_hotkey(hotkey_str, move || {
+                let callback = callback.clone();
+                let rx = rx.clone();
+                async move {
+                    if rx.lock().unwrap().try_recv().is_ok() {
+                        return false;
+                    }
+                    callback().await;
+                    true
+                }
+            })
+            .await;
+        });
+    });
+
+    handle
+}
