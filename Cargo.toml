@@ -30,6 +30,10 @@ path = "example/get_explorer_selected_file.rs"
 name = "cwd"
 path = "example/get_explorer_location.rs"
 
+[[example]]
+name = "drag"
+path = "example/listen_explorer_drag.rs"
+
 [dependencies]
 windows = { version = "0.58", features = [
     "Win32_Foundation",
@@ -40,7 +44,8 @@ windows = { version = "0.58", features = [
     "Win32_UI_Shell_Common",
     "Win32_UI_Input",
     "Win32_UI_Input_KeyboardAndMouse",
-    "Win32_System_SystemServices"] }
+    "Win32_System_SystemServices",
+    "Win32_System_Threading"] }
 urlencoding = "2.1.3"
 scopeguard = "1.2.0"
 futures = "0.3.31"

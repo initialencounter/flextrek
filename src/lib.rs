@@ -15,6 +15,7 @@ use tokio::sync::oneshot;
 pub mod get_explorer_location;
 pub mod get_explorer_selected_file;
 pub mod hotkey;
+pub mod listen_explorer_drag;
 
 pub struct HotkeyHandle {
     cancel_sender: oneshot::Sender<()>,
