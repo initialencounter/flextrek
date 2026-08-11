@@ -1,12 +1,13 @@
 use windows::{
-    core::{Interface, VARIANT, w},
+    core::{w, Interface},
     Win32::{
         System::{
             Com::{
-                CLSCTX_SERVER, CoCreateInstance, COINIT_APARTMENTTHREADED, CoInitializeEx, CoUninitialize,
-                IDispatch, IServiceProvider,
+                CoCreateInstance, CoInitializeEx, CoUninitialize, IDispatch, IServiceProvider,
+                CLSCTX_SERVER, COINIT_APARTMENTTHREADED,
             },
             SystemServices::{SFGAO_FILESYSTEM, SFGAO_FOLDER},
+            Variant::{VARIANT, VT_I4},
         },
         UI::{
             Shell::{
@@ -40,7 +41,7 @@ pub fn get_explorer_selected_file() -> Vec<String> {
             };
 
         let result_hwnd = match WindowsAndMessaging::FindWindowExW(
-            hwnd_gfw,
+            Some(hwnd_gfw),
             None,
             w!("ShellTabWindowClass"),
             None,
@@ -54,7 +55,10 @@ pub fn get_explorer_selected_file() -> Vec<String> {
 
         let count = shell_windows.Count().unwrap_or_default();
         for i in 0..count {
-            let variant = VARIANT::from(i);
+            let mut variant = VARIANT::default();
+            let inner = &mut *variant.Anonymous.Anonymous;
+            inner.vt = VT_I4;
+            inner.Anonymous.lVal = i;
             let window: IDispatch = match shell_windows.Item(&variant) {
                 Ok(w) => w,
                 Err(e) => {

@@ -120,7 +120,6 @@ where
     handle
 }
 
-
 pub fn listen<F, Fut>(hotkey_str: String, callback: F) -> HotkeyHandle
 where
     F: Fn() -> Fut + Send + Clone + 'static,

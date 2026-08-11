@@ -1,25 +1,29 @@
 use std::path::PathBuf;
 
 use urlencoding::decode;
-use windows::core::{BSTR, Error, Interface, Result, VARIANT, w};
+use windows::core::{w, Error, Interface, Result, BSTR};
+use windows::Win32::Foundation::{HWND, SHANDLE_PTR};
+use windows::Win32::System::Com::CoUninitialize;
 use windows::Win32::{
     System::Com::{
-        CLSCTX_LOCAL_SERVER, CoCreateInstance, COINIT_APARTMENTTHREADED, CoInitializeEx, IDispatch,
+        CoCreateInstance, CoInitializeEx, IDispatch, CLSCTX_LOCAL_SERVER, COINIT_APARTMENTTHREADED,
     },
+    System::Variant::{VARIANT, VT_I4},
     UI::{
         Shell::{IShellWindows, IWebBrowser2, ShellWindows},
         WindowsAndMessaging::{FindWindowExW, GetForegroundWindow},
     },
 };
-use windows::Win32::Foundation::{HWND, SHANDLE_PTR};
-use windows::Win32::System::Com::CoUninitialize;
 
 pub fn get_focused_explorer_path() -> Result<PathBuf> {
     unsafe {
         // 检查 COM 初始化的结果
         let hr = CoInitializeEx(None, COINIT_APARTMENTTHREADED);
         if hr.is_err() {
-            return Err(Error::new(windows::core::HRESULT(0), "Failed to initialize COM"));
+            return Err(Error::new(
+                windows::core::HRESULT(0),
+                "Failed to initialize COM",
+            ));
         }
 
         let hwnd_gfw: HWND = GetForegroundWindow();
@@ -44,11 +48,15 @@ pub fn get_focused_explorer_path() -> Result<PathBuf> {
             Ok(c) => c,
             Err(_) => {
                 CoUninitialize();
-                return Err(Error::new(windows::core::HRESULT(0), "Failed to get window count"));
+                return Err(Error::new(
+                    windows::core::HRESULT(0),
+                    "Failed to get window count",
+                ));
             }
         };
 
-        let result_hwnd = match FindWindowExW(hwnd_gfw, None, w!("ShellTabWindowClass"), None) {
+        let result_hwnd = match FindWindowExW(Some(hwnd_gfw), None, w!("ShellTabWindowClass"), None)
+        {
             Ok(hwnd) => hwnd,
             Err(_) => {
                 CoUninitialize();
@@ -60,7 +68,11 @@ pub fn get_focused_explorer_path() -> Result<PathBuf> {
         };
 
         for i in 0..count {
-            let item: IDispatch = match shell_windows.Item(&VARIANT::from(i)) {
+            let mut variant = VARIANT::default();
+            let inner = &mut *variant.Anonymous.Anonymous;
+            inner.vt = VT_I4;
+            inner.Anonymous.lVal = i;
+            let item: IDispatch = match shell_windows.Item(&variant) {
                 Ok(item) => item,
                 Err(_) => continue,
             };

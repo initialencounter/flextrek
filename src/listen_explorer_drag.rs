@@ -4,7 +4,6 @@
 //! 4. 消息泵调用已有的 get_explorer_selected_file() 拿到被拖文件的完整路径，非空则回调
 //! 5. DragHandle::unregister() 发 WM_QUIT 退出循环并 UnhookWindowsHookEx
 
-
 use std::cell::Cell;
 use std::sync::mpsc::channel;
 use std::sync::OnceLock;
@@ -17,9 +16,9 @@ use windows::Win32::System::Threading::{
     PROCESS_QUERY_LIMITED_INFORMATION,
 };
 use windows::Win32::UI::WindowsAndMessaging::{
-    CallNextHookEx, GetMessageW, GetSystemMetrics, GetWindowThreadProcessId, MSLLHOOKSTRUCT, MSG,
-    PostThreadMessageW, SetWindowsHookExW, SM_CXDRAG, SM_CYDRAG, UnhookWindowsHookEx,
-    WindowFromPoint, WH_MOUSE_LL, WM_APP, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_MOUSEMOVE, WM_QUIT,
+    CallNextHookEx, GetMessageW, GetSystemMetrics, GetWindowThreadProcessId, PostThreadMessageW,
+    SetWindowsHookExW, UnhookWindowsHookEx, WindowFromPoint, MSG, MSLLHOOKSTRUCT, SM_CXDRAG,
+    SM_CYDRAG, WH_MOUSE_LL, WM_APP, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_MOUSEMOVE, WM_QUIT,
 };
 
 use crate::get_explorer_selected_file::get_explorer_selected_file;

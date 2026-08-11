@@ -35,12 +35,13 @@ name = "drag"
 path = "example/listen_explorer_drag.rs"
 
 [dependencies]
-windows = { version = "0.58", features = [
+windows = { version = "0.62.2", features = [
     "Win32_Foundation",
     "Win32_UI_WindowsAndMessaging",
     "Win32_UI_Shell",
     "Win32_System_Com",
     "Win32_System_Ole",
+    "Win32_System_Variant",
     "Win32_UI_Shell_Common",
     "Win32_UI_Input",
     "Win32_UI_Input_KeyboardAndMouse",
@@ -48,8 +49,8 @@ windows = { version = "0.58", features = [
     "Win32_System_Threading"] }
 urlencoding = "2.1.3"
 scopeguard = "1.2.0"
-futures = "0.3.31"
-tokio = { version = "1.0", features = ["rt", "rt-multi-thread", "sync"] }
+futures = "0.3.34"
+tokio = { version = "1.53", features = ["rt", "rt-multi-thread", "sync"] }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-pc-windows-msvc", "i686-pc-windows-msvc"]
