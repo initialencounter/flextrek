@@ -109,16 +109,22 @@ jobs:
       - name: Publish
         run: |
           npm config set provenance true
-          if git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$";
-          then
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-            npm publish --access public
-          elif git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+";
-          then
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+          # 仅 tag 推送时发布（手动触发 / 分支推送直接跳过）
+          if [[ "$GITHUB_REF_TYPE" != "tag" ]]; then
+            echo "Not a tag push, skipping publish"
+            exit 0
+          fi
+          VERSION="${GITHUB_REF_NAME#v}"
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "Tag \"$GITHUB_REF_NAME\" is not a valid version tag, skipping publish"
+            exit 0
+          fi
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+          # 带预发布后缀（如 v1.2.3-beta.1）走 next，正式版本走 latest
+          if [[ "$VERSION" == *-* ]]; then
             npm publish --tag next --access public
           else
-            echo "Not a release, skipping publish"
+            npm publish --access public
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
