@@ -1652,9 +1652,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flextrek-rs@workspace:.":
+"flextrek@workspace:.":
   version: 0.0.0-use.local
-  resolution: "flextrek-rs@workspace:."
+  resolution: "flextrek@workspace:."
   dependencies:
     "@emnapi/core": "npm:^1.5.0"
     "@emnapi/runtime": "npm:^1.5.0"
