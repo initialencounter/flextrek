@@ -77,7 +77,8 @@ fn main() {
 
 ## CHANGELOG
 
-- v0.2.2: add listen_explorer_drag_files to listen for file drags out of explorer
+- v0.3.1: support folder dragging
+- v0.3.0: add listen_explorer_drag_files to listen for file drags out of explorer
 - v0.2.1: remove async from listen_path and listen_selected_files
 - v0.2.0: add unregister method
 - v0.1.1: replace hotkey_str type from &str to String
