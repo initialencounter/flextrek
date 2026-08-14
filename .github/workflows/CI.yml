@@ -1,14 +1,14 @@
 name: CI
 env:
   DEBUG: napi:*
-  APP_NAME: flextrek
+  APP_NAME: '@initencounter/flextrek'
   MACOSX_DEPLOYMENT_TARGET: '10.13'
   CARGO_INCREMENTAL: '1'
-on:
-  workflow_dispatch:
+'on':
+  workflow_dispatch: null
   push:
     tags:
-      - "v*"
+      - v*
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true

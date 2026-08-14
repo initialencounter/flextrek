@@ -78,8 +78,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-android-arm64')
-        const bindingPackageVersion = require('flextrek-android-arm64/package.json').version
+        const binding = require('@initencounter/flextrek-android-arm64')
+        const bindingPackageVersion = require('@initencounter/flextrek-android-arm64/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -94,8 +94,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-android-arm-eabi')
-        const bindingPackageVersion = require('flextrek-android-arm-eabi/package.json').version
+        const binding = require('@initencounter/flextrek-android-arm-eabi')
+        const bindingPackageVersion = require('@initencounter/flextrek-android-arm-eabi/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -114,8 +114,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-win32-x64-msvc')
-        const bindingPackageVersion = require('flextrek-win32-x64-msvc/package.json').version
+        const binding = require('@initencounter/flextrek-win32-x64-msvc')
+        const bindingPackageVersion = require('@initencounter/flextrek-win32-x64-msvc/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -130,8 +130,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-win32-ia32-msvc')
-        const bindingPackageVersion = require('flextrek-win32-ia32-msvc/package.json').version
+        const binding = require('@initencounter/flextrek-win32-ia32-msvc')
+        const bindingPackageVersion = require('@initencounter/flextrek-win32-ia32-msvc/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -146,8 +146,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-win32-arm64-msvc')
-        const bindingPackageVersion = require('flextrek-win32-arm64-msvc/package.json').version
+        const binding = require('@initencounter/flextrek-win32-arm64-msvc')
+        const bindingPackageVersion = require('@initencounter/flextrek-win32-arm64-msvc/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -165,8 +165,8 @@ function requireNative() {
       loadErrors.push(e)
     }
     try {
-      const binding = require('flextrek-darwin-universal')
-      const bindingPackageVersion = require('flextrek-darwin-universal/package.json').version
+      const binding = require('@initencounter/flextrek-darwin-universal')
+      const bindingPackageVersion = require('@initencounter/flextrek-darwin-universal/package.json').version
       if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
         throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
       }
@@ -181,8 +181,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-darwin-x64')
-        const bindingPackageVersion = require('flextrek-darwin-x64/package.json').version
+        const binding = require('@initencounter/flextrek-darwin-x64')
+        const bindingPackageVersion = require('@initencounter/flextrek-darwin-x64/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -197,8 +197,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-darwin-arm64')
-        const bindingPackageVersion = require('flextrek-darwin-arm64/package.json').version
+        const binding = require('@initencounter/flextrek-darwin-arm64')
+        const bindingPackageVersion = require('@initencounter/flextrek-darwin-arm64/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -217,8 +217,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-freebsd-x64')
-        const bindingPackageVersion = require('flextrek-freebsd-x64/package.json').version
+        const binding = require('@initencounter/flextrek-freebsd-x64')
+        const bindingPackageVersion = require('@initencounter/flextrek-freebsd-x64/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -233,8 +233,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-freebsd-arm64')
-        const bindingPackageVersion = require('flextrek-freebsd-arm64/package.json').version
+        const binding = require('@initencounter/flextrek-freebsd-arm64')
+        const bindingPackageVersion = require('@initencounter/flextrek-freebsd-arm64/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -254,8 +254,8 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('flextrek-linux-x64-musl')
-          const bindingPackageVersion = require('flextrek-linux-x64-musl/package.json').version
+          const binding = require('@initencounter/flextrek-linux-x64-musl')
+          const bindingPackageVersion = require('@initencounter/flextrek-linux-x64-musl/package.json').version
           if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
             throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
@@ -270,8 +270,8 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('flextrek-linux-x64-gnu')
-          const bindingPackageVersion = require('flextrek-linux-x64-gnu/package.json').version
+          const binding = require('@initencounter/flextrek-linux-x64-gnu')
+          const bindingPackageVersion = require('@initencounter/flextrek-linux-x64-gnu/package.json').version
           if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
             throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
@@ -288,8 +288,8 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('flextrek-linux-arm64-musl')
-          const bindingPackageVersion = require('flextrek-linux-arm64-musl/package.json').version
+          const binding = require('@initencounter/flextrek-linux-arm64-musl')
+          const bindingPackageVersion = require('@initencounter/flextrek-linux-arm64-musl/package.json').version
           if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
             throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
@@ -304,8 +304,8 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('flextrek-linux-arm64-gnu')
-          const bindingPackageVersion = require('flextrek-linux-arm64-gnu/package.json').version
+          const binding = require('@initencounter/flextrek-linux-arm64-gnu')
+          const bindingPackageVersion = require('@initencounter/flextrek-linux-arm64-gnu/package.json').version
           if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
             throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
@@ -322,8 +322,8 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('flextrek-linux-arm-musleabihf')
-          const bindingPackageVersion = require('flextrek-linux-arm-musleabihf/package.json').version
+          const binding = require('@initencounter/flextrek-linux-arm-musleabihf')
+          const bindingPackageVersion = require('@initencounter/flextrek-linux-arm-musleabihf/package.json').version
           if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
             throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
@@ -338,8 +338,8 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('flextrek-linux-arm-gnueabihf')
-          const bindingPackageVersion = require('flextrek-linux-arm-gnueabihf/package.json').version
+          const binding = require('@initencounter/flextrek-linux-arm-gnueabihf')
+          const bindingPackageVersion = require('@initencounter/flextrek-linux-arm-gnueabihf/package.json').version
           if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
             throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
@@ -356,8 +356,8 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('flextrek-linux-loong64-musl')
-          const bindingPackageVersion = require('flextrek-linux-loong64-musl/package.json').version
+          const binding = require('@initencounter/flextrek-linux-loong64-musl')
+          const bindingPackageVersion = require('@initencounter/flextrek-linux-loong64-musl/package.json').version
           if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
             throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
@@ -372,8 +372,8 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('flextrek-linux-loong64-gnu')
-          const bindingPackageVersion = require('flextrek-linux-loong64-gnu/package.json').version
+          const binding = require('@initencounter/flextrek-linux-loong64-gnu')
+          const bindingPackageVersion = require('@initencounter/flextrek-linux-loong64-gnu/package.json').version
           if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
             throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
@@ -390,8 +390,8 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('flextrek-linux-riscv64-musl')
-          const bindingPackageVersion = require('flextrek-linux-riscv64-musl/package.json').version
+          const binding = require('@initencounter/flextrek-linux-riscv64-musl')
+          const bindingPackageVersion = require('@initencounter/flextrek-linux-riscv64-musl/package.json').version
           if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
             throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
@@ -406,8 +406,8 @@ function requireNative() {
           loadErrors.push(e)
         }
         try {
-          const binding = require('flextrek-linux-riscv64-gnu')
-          const bindingPackageVersion = require('flextrek-linux-riscv64-gnu/package.json').version
+          const binding = require('@initencounter/flextrek-linux-riscv64-gnu')
+          const bindingPackageVersion = require('@initencounter/flextrek-linux-riscv64-gnu/package.json').version
           if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
             throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
           }
@@ -423,8 +423,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-linux-ppc64-gnu')
-        const bindingPackageVersion = require('flextrek-linux-ppc64-gnu/package.json').version
+        const binding = require('@initencounter/flextrek-linux-ppc64-gnu')
+        const bindingPackageVersion = require('@initencounter/flextrek-linux-ppc64-gnu/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -439,8 +439,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-linux-s390x-gnu')
-        const bindingPackageVersion = require('flextrek-linux-s390x-gnu/package.json').version
+        const binding = require('@initencounter/flextrek-linux-s390x-gnu')
+        const bindingPackageVersion = require('@initencounter/flextrek-linux-s390x-gnu/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -459,8 +459,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-openharmony-arm64')
-        const bindingPackageVersion = require('flextrek-openharmony-arm64/package.json').version
+        const binding = require('@initencounter/flextrek-openharmony-arm64')
+        const bindingPackageVersion = require('@initencounter/flextrek-openharmony-arm64/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -475,8 +475,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-openharmony-x64')
-        const bindingPackageVersion = require('flextrek-openharmony-x64/package.json').version
+        const binding = require('@initencounter/flextrek-openharmony-x64')
+        const bindingPackageVersion = require('@initencounter/flextrek-openharmony-x64/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -491,8 +491,8 @@ function requireNative() {
         loadErrors.push(e)
       }
       try {
-        const binding = require('flextrek-openharmony-arm')
-        const bindingPackageVersion = require('flextrek-openharmony-arm/package.json').version
+        const binding = require('@initencounter/flextrek-openharmony-arm')
+        const bindingPackageVersion = require('@initencounter/flextrek-openharmony-arm/package.json').version
         if (bindingPackageVersion !== '0.3.1' && process.env.NAPI_RS_ENFORCE_VERSION_CHECK && process.env.NAPI_RS_ENFORCE_VERSION_CHECK !== '0') {
           throw new Error(`Native binding package version mismatch, expected 0.3.1 but got ${bindingPackageVersion}. You can reinstall dependencies to fix this issue.`)
         }
@@ -523,7 +523,7 @@ if (!nativeBinding || process.env.NAPI_RS_FORCE_WASI) {
   }
   if (!nativeBinding) {
     try {
-      wasiBinding = require('flextrek-wasm32-wasi')
+      wasiBinding = require('@initencounter/flextrek-wasm32-wasi')
       nativeBinding = wasiBinding
     } catch (err) {
       if (process.env.NAPI_RS_FORCE_WASI) {
