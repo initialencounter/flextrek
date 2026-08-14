@@ -75,7 +75,8 @@ jobs:
         with:
           name: bindings-${{ matrix.settings.target }}
           path: |
-            ${{ env.APP_NAME }}.*.node
+            bindings/node/${{ env.APP_NAME }}.*.node
+            bindings/node/${{ env.APP_NAME }}.*.wasm
           if-no-files-found: error
   publish:
     name: Publish
@@ -99,7 +100,7 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v8
         with:
-          path: artifacts
+          path: bindings/node/artifacts
       - name: Move artifacts
         run: yarn artifacts
       - name: List packages
