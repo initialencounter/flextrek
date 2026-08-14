@@ -1,11 +1,11 @@
 {
-  "name": "flextrek-rs",
+  "name": "flextrek",
   "version": "0.3.1",
   "description": "Template project for writing node package with napi-rs",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/napi-rs/package-template.git"
+    "url": "git+https://github.com/initialencounter/flextrek.git"
   },
   "license": "AGPL-3.0",
   "browser": "browser.js",
@@ -23,7 +23,7 @@
     "browser.js"
   ],
   "napi": {
-    "binaryName": "flextrek-rs",
+    "binaryName": "flextrek",
     "targets": [
       "x86_64-pc-windows-msvc"
     ]
