@@ -110,8 +110,8 @@ impl DragHandle {
     }
 }
 
-/// 全局监听从资源管理器拖出文件的手势（左键按下并移动超过系统拖拽阈值）。
-/// 触发时读取拖拽源 Explorer 窗口的选中项（即被拖拽的文件），非空时调用 callback。
+/// 全局监听从资源管理器拖出文件/文件夹的手势（左键按下并移动超过系统拖拽阈值）。
+/// 触发时读取拖拽源 Explorer 窗口的选中项（即被拖拽的文件/文件夹），非空时调用 callback。
 /// 注意：全局同时只能有一个监听器；从桌面图标拖动暂不支持。
 pub fn listen_explorer_drag_files<F, Fut>(callback: F) -> DragHandle
 where

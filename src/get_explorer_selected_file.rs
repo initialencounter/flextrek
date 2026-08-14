@@ -6,7 +6,7 @@ use windows::{
                 CoCreateInstance, CoInitializeEx, CoUninitialize, IDispatch, IServiceProvider,
                 CLSCTX_SERVER, COINIT_APARTMENTTHREADED,
             },
-            SystemServices::{SFGAO_FILESYSTEM, SFGAO_FOLDER},
+            SystemServices::SFGAO_FILESYSTEM,
             Variant::{VARIANT, VT_I4},
         },
         UI::{
@@ -137,14 +137,7 @@ pub fn get_explorer_selected_file() -> Vec<String> {
                     }
                 }
 
-                // 如果不是文件则继续循环
-                if let Ok(attrs) = shell_item.GetAttributes(SFGAO_FOLDER) {
-                    if attrs.0 != 0 {
-                        continue;
-                    }
-                }
-
-                // 获取文件名
+                // 获取文件/文件夹的文件系统路径
                 if let Ok(display_name) = shell_item.GetDisplayName(SIGDN_FILESYSPATH) {
                     if let Ok(name) = display_name.to_string() {
                         file_list.push(name);
@@ -152,7 +145,7 @@ pub fn get_explorer_selected_file() -> Vec<String> {
                     }
                 }
 
-                // 获取文件夹名
+                // 虚拟文件夹等无文件系统路径的项，回退到解析路径
                 if let Ok(display_name) = shell_item.GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING) {
                     if let Ok(name) = display_name.to_string() {
                         file_list.push(name);
