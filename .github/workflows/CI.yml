@@ -33,6 +33,7 @@ jobs:
         with:
           node-version: 24
           cache: yarn
+          cache-dependency-path: bindings/node/yarn.lock
       - name: Install
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -90,6 +91,7 @@ jobs:
         with:
           node-version: 24
           cache: yarn
+          cache-dependency-path: bindings/node/yarn.lock
       - name: Install dependencies
         run: yarn install
       - name: create npm dirs
