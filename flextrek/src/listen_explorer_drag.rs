@@ -1,24 +1,19 @@
 //! 1. 独立线程安装 WH_MOUSE_LL 低级鼠标钩子（全局、免注入）
-//! 2. 左键按下时，若光标下窗口属于 explorer.exe(WindowFromPoint → GetWindowThreadProcessId → QueryFullProcessImageNameW 判断），记录起点
-//! 3. 按住移动超过系统拖拽阈值（SM_CXDRAG/SM_CYDRAG）即判定拖拽开始，通过 PostThreadMessageW 唤醒消息泵
-//! 4. 消息泵调用已有的 get_explorer_selected_file() 拿到被拖文件的完整路径，非空则回调
-//! 5. DragHandle::unregister() 发 WM_QUIT 退出循环并 UnhookWindowsHookEx
+//! 2. 按住移动超过系统拖拽阈值（SM_CXDRAG/SM_CYDRAG）即判定拖拽开始，通过 PostThreadMessageW 唤醒消息泵
+//! 3. 消息泵调用已有的 get_explorer_selected_file() 拿到被拖文件的完整路径，非空则回调
+//! 4. DragHandle::unregister() 发 WM_QUIT 退出循环并 UnhookWindowsHookEx
 
 use std::cell::Cell;
 use std::sync::mpsc::channel;
-use std::sync::OnceLock;
+use std::sync::{Arc, OnceLock};
 
 use futures::Future;
-use windows::core::PWSTR;
-use windows::Win32::Foundation::{CloseHandle, LPARAM, LRESULT, POINT, WPARAM};
-use windows::Win32::System::Threading::{
-    GetCurrentThreadId, OpenProcess, QueryFullProcessImageNameW, PROCESS_NAME_WIN32,
-    PROCESS_QUERY_LIMITED_INFORMATION,
-};
+use windows::Win32::Foundation::{LPARAM, LRESULT, POINT, WPARAM};
+use windows::Win32::System::Threading::GetCurrentThreadId;
 use windows::Win32::UI::WindowsAndMessaging::{
-    CallNextHookEx, GetMessageW, GetSystemMetrics, GetWindowThreadProcessId, PostThreadMessageW,
-    SetWindowsHookExW, UnhookWindowsHookEx, WindowFromPoint, MSG, MSLLHOOKSTRUCT, SM_CXDRAG,
-    SM_CYDRAG, WH_MOUSE_LL, WM_APP, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_MOUSEMOVE, WM_QUIT,
+    CallNextHookEx, GetMessageW, GetSystemMetrics, PostThreadMessageW, SetWindowsHookExW,
+    UnhookWindowsHookEx, MSG, MSLLHOOKSTRUCT, SM_CXDRAG, SM_CYDRAG, WH_MOUSE_LL, WM_APP,
+    WM_LBUTTONDOWN, WM_LBUTTONUP, WM_MOUSEMOVE, WM_QUIT,
 };
 
 use crate::get_explorer_selected_file::get_explorer_selected_file;
@@ -32,37 +27,6 @@ thread_local! {
     static DRAG_START: Cell<Option<POINT>> = const { Cell::new(None) };
 }
 
-/// 判断指定屏幕坐标处的窗口是否属于 explorer.exe
-fn is_explorer_at(pt: POINT) -> bool {
-    unsafe {
-        let hwnd = WindowFromPoint(pt);
-        let mut pid = 0u32;
-        GetWindowThreadProcessId(hwnd, Some(&mut pid));
-        if pid == 0 {
-            return false;
-        }
-        let Ok(process) = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid) else {
-            return false;
-        };
-        let mut buf = [0u16; 260];
-        let mut len = buf.len() as u32;
-        let ok = QueryFullProcessImageNameW(
-            process,
-            PROCESS_NAME_WIN32,
-            PWSTR(buf.as_mut_ptr()),
-            &mut len,
-        )
-        .is_ok();
-        let _ = CloseHandle(process);
-        if !ok {
-            return false;
-        }
-        String::from_utf16_lossy(&buf[..len as usize])
-            .to_lowercase()
-            .ends_with("explorer.exe")
-    }
-}
-
 unsafe extern "system" fn low_level_mouse_proc(
     code: i32,
     wparam: WPARAM,
@@ -73,8 +37,8 @@ unsafe extern "system" fn low_level_mouse_proc(
         let info = &*(lparam.0 as *const MSLLHOOKSTRUCT);
         match msg {
             WM_LBUTTONDOWN => {
-                let pt = info.pt;
-                DRAG_START.with(|c| c.set(if is_explorer_at(pt) { Some(pt) } else { None }));
+                let pt: POINT = info.pt;
+                DRAG_START.with(|c| c.set(Some(pt)));
             }
             WM_MOUSEMOVE => {
                 DRAG_START.with(|c| {
@@ -115,13 +79,15 @@ impl DragHandle {
 /// 注意：全局同时只能有一个监听器；从桌面图标拖动暂不支持。
 pub fn listen_explorer_drag_files<F, Fut>(callback: F) -> DragHandle
 where
-    F: Fn(Vec<String>) -> Fut + Send + 'static,
+    F: Fn(Vec<String>) -> Fut + Send + Sync + 'static,
     Fut: Future<Output = ()> + Send,
 {
+    let callback = Arc::new(callback);
     let (tx, rx) = channel::<u32>();
 
     std::thread::spawn(move || {
         let rt = tokio::runtime::Runtime::new().unwrap();
+        let handle = rt.handle().clone();
         rt.block_on(async move {
             unsafe {
                 let tid = GetCurrentThreadId();
@@ -142,10 +108,16 @@ where
                     if msg.message != WM_FLEXTREK_DRAG {
                         continue;
                     }
-                    let files = get_explorer_selected_file();
-                    if !files.is_empty() {
-                        callback(files).await;
-                    }
+                    // 耗时的 COM 查询移到阻塞线程池，消息泵线程绝不能阻塞：
+                    // 低级钩子几秒内不被响应会被 Windows 静默移除。
+                    let cb = callback.clone();
+                    let blocking_handle = handle.clone();
+                    handle.spawn_blocking(move || {
+                        let files = get_explorer_selected_file();
+                        if !files.is_empty() {
+                            let _ = blocking_handle.block_on(cb(files));
+                        }
+                    });
                 }
 
                 let _ = UnhookWindowsHookEx(hook);
